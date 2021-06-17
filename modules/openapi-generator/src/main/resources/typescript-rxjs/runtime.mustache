@@ -88,6 +88,14 @@ export class BaseAPI {
         // do not handle correctly sometimes.
         const url = `${this.configuration.basePath}${baseUrl}${query && Object.keys(query).length ? `?${queryString(query)}`: ''}`;
 
+        const auth = this.configuration.accessToken("");
+        if (typeof auth === "string") {
+          headers = {
+            ...headers,
+            Authorization: `Bearer ${auth}`,
+          };
+        }
+
         return {
             url,
             method,
